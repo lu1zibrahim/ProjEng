@@ -17,7 +17,7 @@ faces = []
 nomes = []
 distancias = []
 
-pasta = './'
+pasta = '/rostos/'
 
 def procuraRosto(frame):
     try:
