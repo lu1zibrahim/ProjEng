@@ -105,4 +105,6 @@ while rodando:
 camera.release()
 cv2.destroyAllWindows()
 
-#Comentei essa linha
+
+
+#Comentei essa outra linhas
