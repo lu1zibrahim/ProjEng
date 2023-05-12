@@ -17,7 +17,7 @@ faces = []
 nomes = []
 distancias = []
 
-pasta = '/rostos/'
+pasta = 'rostos/'
 
 def procuraRosto(frame):
     try:
@@ -80,7 +80,7 @@ while rodando:
             
             while aux_compare < (qtd_pessoas):
                 encodeTrain = faces[aux_compare]
-                comparacao = fr.compare_faces([encodeTrain],encodeTest)
+                comparacao = fr.compare_faces([encodeTrain],encodeTest,tolerance=0.48) #Comparação Face Atual X Face Treinada.
                 distancia = fr.face_distance([encodeTrain],encodeTest)
                 print(comparacao,distancia)
             
