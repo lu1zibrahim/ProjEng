@@ -99,20 +99,41 @@ while rodando:
                                 org = (loc_x, loc_y)
                                 cv2.putText(detect, nome, org , font, fontScale, color, thickness, cv2.LINE_AA, False)
 
-
                                 
-                                if nome in nomes_entrada:
-                                    registros_saida.append([nome, agora])
-                                    index_nome = nomes_entrada.index(nome)
-                                    agora = datetime.now()
-                                    tempo_permanencia = agora - (registros_entrada[index_nome][1])
-                                    print("SAIDA REGISTRADA: "+nome+" - TEMPO DE PERMANENCIA: "+str(tempo_permanencia))
 
-                                    pass
-                                else:
+                                for registro in registros_entrada:
+                                    """
+                                    Esse loop funciona para percorrer a listagem de registros se o funcionário estiver já registrado a entrada, ele vai registrar a saída e apagar da lista de funcionários que estão no local.
+                                    """
+                                    if nome in registro[0]:
+                                        saida = datetime.now()
+                                        tempo_permanencia = saida - registro[1]
+                                        print("SAIDA REGISTRADA: "+nome+" - TEMPO DE PERMANENCIA: "+str(tempo_permanencia))
+                                        registros_saida.append([nome, registro[1], saida,tempo_permanencia])
+                                        index_nome = registros_entrada[0].index(nome)
+                                        registros_entrada.pop(index_nome)
+                                        print(registros_entrada)
+                                        print(registros_saida)
+                                    else:
+                                        agora = datetime.now()
+                                        registros_entrada.append([nome,agora])
+
+                                if len(registros_entrada) == 0:
                                     agora = datetime.now()
-                                    nomes_entrada.append(nome)
-                                    registros_entrada.append([nome, agora])
+                                    registros_entrada.append([nome,agora])
+
+                                # if nome in nomes_entrada:
+                                #     registros_saida.append([nome, agora])
+                                #     index_nome = nomes_entrada.index(nome)
+                                #     agora = datetime.now()
+                                #     tempo_permanencia = agora - (registros_entrada[index_nome][1])
+                                #     print("SAIDA REGISTRADA: "+nome+" - TEMPO DE PERMANENCIA: "+str(tempo_permanencia))
+
+                                #     pass
+                                # else:
+                                #     agora = datetime.now()
+                                #     nomes_entrada.append(nome)
+                                #     registros_entrada.append([nome, agora])
                                 
 
                                 print("ACESSO LIBERADO: "+str(nome))
