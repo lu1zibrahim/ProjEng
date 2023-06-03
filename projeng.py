@@ -101,26 +101,31 @@ while rodando:
 
                                 
 
-                                for registro in registros_entrada:
-                                    """
-                                    Esse loop funciona para percorrer a listagem de registros se o funcionário estiver já registrado a entrada, ele vai registrar a saída e apagar da lista de funcionários que estão no local.
-                                    """
-                                    if nome in registro[0]:
-                                        saida = datetime.now()
-                                        tempo_permanencia = saida - registro[1]
-                                        print("SAIDA REGISTRADA: "+nome+" - TEMPO DE PERMANENCIA: "+str(tempo_permanencia))
-                                        registros_saida.append([nome, registro[1], saida,tempo_permanencia])
-                                        index_nome = registros_entrada[0].index(nome)
-                                        registros_entrada.pop(index_nome)
-                                        print(registros_entrada)
-                                        print(registros_saida)
-                                    else:
-                                        agora = datetime.now()
-                                        registros_entrada.append([nome,agora])
-
                                 if len(registros_entrada) == 0:
+                                    """
+                                    Primeiramente conferir se a lista estiver vazia, caso esteja, irá inserir o primeiro usuário
+                                    """
                                     agora = datetime.now()
                                     registros_entrada.append([nome,agora])
+                                else:    
+                                    for registro in registros_entrada:
+                                        """
+                                        Esse loop funciona para percorrer a listagem de registros se o funcionário estiver já registrado a entrada, ele vai registrar a saída e apagar da lista de funcionários que estão no local.
+                                        """
+                                        if nome in registro[0]:
+                                            saida = datetime.now()
+                                            tempo_permanencia = saida - registro[1]
+                                            print("SAIDA REGISTRADA: "+nome+" - TEMPO DE PERMANENCIA: "+str(tempo_permanencia))
+                                            registros_saida.append([nome, registro[1], saida,tempo_permanencia])
+                                            index_nome = registros_entrada[0].index(nome)
+                                            registros_entrada.pop(index_nome)
+                                            print(registros_entrada)
+                                            print(registros_saida)
+                                        else:
+                                            agora = datetime.now()
+                                            registros_entrada.append([nome,agora])
+
+                                
 
                                 # if nome in nomes_entrada:
                                 #     registros_saida.append([nome, agora])
