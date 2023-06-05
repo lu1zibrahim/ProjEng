@@ -51,29 +51,29 @@ def main():
     sg.theme('Black')
 
     # define the window layout
-    layout = [[sg.Text('Nome')],
-              [sg.Input(key='-IN-')],
-              [sg.Text('Camera', size=(40, 1), justification='center', font='Helvetica 20')],
-              [sg.Image(filename='', key='image')],
-              [sg.Button('Ligar Camera', size=(10, 1), font='Helvetica 14'),
+    layout = [[sg.Text('Nome')], # Entrada de nome do funcionario - Campo de visualização
+              [sg.Input(key='-IN-')], # Entrada de nome do funcionario - Campo de Input
+              [sg.Text('Camera', size=(40, 1), justification='center', font='Helvetica 20')], # Texto para a Camera
+              [sg.Image(filename='', key='image')], # Local para a camera
+              [sg.Button('Ligar Camera', size=(10, 1), font='Helvetica 14'), # Contém os campos de botões de acionamento
                sg.Button('Tirar Foto', size=(10, 1), font='Helvetica 14'),
                sg.Button('Parar', size=(10, 1), font='Any 14'),
                sg.Button('Sair', size=(10, 1), font='Helvetica 14')],
               [sg.Button('Cadastrar',size=(10, 1), font='Helvetica 14')],
                ]
 
-    # create the window and show it without the plot
-    window = sg.Window('Demo Application - OpenCV Integration',
+    # Criação da janela
+    window = sg.Window('Projeto e Engenharia de Software',
                        layout, location=(800, 400))
     
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(0) # Identificando a Camera
     recording = False
     picture = False
 
-    while True:
+    while True: # Loop principal de leitura dos valores.
         event, values = window.read(timeout=20)
         nome = values['-IN-']
-        check_nome = bool(nome)
+        check_nome = bool(nome) # Verifica se o input de nome está vazio
         if event == 'Sair' or event == sg.WIN_CLOSED:
             return
 
@@ -87,35 +87,33 @@ def main():
         elif event == 'Parar':
             recording = False
             picture = False
-            print(nome)
-            print(check_nome)
             # img = np.full((480, 640), 255)
             # # this is faster, shorter and needs less includes
             # imgbytes = cv2.imencode('.png', img)[1].tobytes()
             # window['image'].update(data=imgbytes)
 
-        elif recording:
+        elif recording: # Esta condição verifica se foi pressionado "Ligar a Camera" assim ela liga a leitura do OpenCV e projeta na tela
             ret, frame = cap.read()
             imgbytes = cv2.imencode('.png', frame)[1].tobytes()
             window['image'].update(data=imgbytes)
-            if picture and check_nome:
+            if picture and check_nome: # Aqui só irá começar caso tenha um nome no input e aperte para tirar a foto
                 recording = False
-                os.chdir('rostos')
+                os.chdir('rostos') # Entrando no diretorio para gravação
                 img_name = f"{nome}.png"
                 cv2.imwrite(img_name, frame)
                 print("{} written!".format(img_name))
                 picture = False
-                os.chdir('..')
-            elif picture == True and check_nome == False:
+                os.chdir('..') # Saindo do diretorio para permitir o restande do programa funcionar
+            elif picture == True and check_nome == False: #Inicial o popup para indicar que para tirar a foto o nome do funcionario é obrigatorio
                 sg.popup('Favor preencher o nome do funcionário antes de tirar a foto')
                 picture = False
 
-        elif event == "Cadastrar":
+        elif event == "Cadastrar": # Inicia o mapeamento da imagem do rosto do funcionario
             print(img_name)
-            os.chdir('rostos')
+            os.chdir('rostos') # Entrando no diretorio para leitura
             encodeTrain = treinamento(img_name)
             salvaEncode(encodeTrain, str(img_name.split(".")[0]))
-            os.chdir('..')
+            os.chdir('..') # Saindo do diretorio para permitir o restande do programa funcionar
 
 
 main()
