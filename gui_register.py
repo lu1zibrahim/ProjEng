@@ -109,11 +109,16 @@ def main():
                 picture = False
 
         elif event == "Cadastrar": # Inicia o mapeamento da imagem do rosto do funcionario
-            print(img_name)
-            os.chdir('rostos') # Entrando no diretorio para leitura
-            encodeTrain = treinamento(img_name)
-            salvaEncode(encodeTrain, str(img_name.split(".")[0]))
-            os.chdir('..') # Saindo do diretorio para permitir o restande do programa funcionar
+            try: 
+                print(img_name)
+                os.chdir('rostos') # Entrando no diretorio para leitura
+                encodeTrain = treinamento(img_name)
+                salvaEncode(encodeTrain, str(img_name.split(".")[0]))
+                os.chdir('..') # Saindo do diretorio para permitir o restande do programa funcionar
+            except IndexError: # Caso não o face_recognition não identificar um rosto ele vai retornar IndexError Out of Range, então nos preparamos para este erro
+                os.chdir('..')
+                sg.popup('Não foi possível cadastrar o rosto, favor tentar novamente')
+                recording = True
 
 
 main()
