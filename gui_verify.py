@@ -151,9 +151,7 @@ def main():
             frame = cv2.resize(frame, (640,480), interpolation = cv2.INTER_AREA)
             window['image'].update(data=cv2.imencode('.ppm', camera.read()[1])[1].tobytes())
             aux_detect = 0
-            aux_sleep_box = 0
             
-            nomes_entrada = []
 
 
             while aux_detect < 5:

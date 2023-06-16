@@ -67,7 +67,7 @@ def main():
                        layout, location=(800, 400))
     
     cap = cv2.VideoCapture(0) # Identificando a Camera
-    recording = False
+    recording = True
     picture = False
 
     while True: # Loop principal de leitura dos valores.
