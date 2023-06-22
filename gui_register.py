@@ -54,12 +54,11 @@ def main():
     layout = [[sg.Text('Nome')], # Entrada de nome do funcionario - Campo de visualização
               [sg.Input(key='-IN-')], # Entrada de nome do funcionario - Campo de Input
               [sg.Text('Camera', size=(40, 1), justification='center', font='Helvetica 20')], # Texto para a Camera
-              [sg.Image(filename='', key='image')], # Local para a camera
-              [sg.Button('Ligar Camera', size=(10, 1), font='Helvetica 14'), # Contém os campos de botões de acionamento
-               sg.Button('Tirar Foto', size=(10, 1), font='Helvetica 14'),
-               sg.Button('Parar', size=(10, 1), font='Any 14'),
-               sg.Button('Sair', size=(10, 1), font='Helvetica 14')],
-              [sg.Button('Cadastrar',size=(10, 1), font='Helvetica 14')],
+              [sg.Image(filename='', key='image')],# Local para a camera
+              [sg.Button("", image_filename='UI/Icons/LigarCamera.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Ligar Camera"), # Contém os campos de botões de acionamento
+               sg.Button("", image_filename='UI/Icons/TirarFoto.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Tirar Foto"), 
+               sg.Button("", image_filename='UI/Icons/Cadastrar.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Cadastrar")],
+              [sg.Button("", image_filename='UI/Icons/Sair.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Sair")]
                ]
 
     # Criação da janela
