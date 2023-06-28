@@ -83,8 +83,15 @@ for diretorio, subpastas, arquivos in os.walk(pasta):
 
 qtd_pessoas = np.shape(nomes)[0]
 
+if os.path.exists('registro_saida.csv'):
+    inicio_saida = pd.read_csv('registro_saida.csv')
+    registros_saida = inicio_saida.values.tolist()
+    print(registros_saida)
+else:
+    print('not')
+    registros_saida = []
+
 registros_entrada = []
-registros_saida = []
 nomes_entrada = []
 
 def main():
