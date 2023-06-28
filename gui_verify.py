@@ -1,6 +1,7 @@
 import PySimpleGUI as sg      
 import cv2
 import numpy as np
+import pandas as pd
 import face_recognition as fr
 from datetime import datetime
 import os
@@ -28,7 +29,6 @@ from time import sleep
 # window.close()
 
 camera = cv2.VideoCapture(0)
-rodando = False
 detection = 'not_found'
 faces = []
 
@@ -94,8 +94,7 @@ def main():
     # define the window layout
     layout = [[sg.Text('Camera', size=(40, 1), justification='center', font='Helvetica 20')], # Texto para a Camera
               [sg.Image(filename='', key='image')], # Local para a camera
-              [sg.Button('Ligar Camera', size=(10, 1), font='Helvetica 14'), # Contém os campos de botões de acionamento
-               sg.Button('Tirar Foto', size=(10, 1), font='Helvetica 14')],
+              [sg.Button('Ligar Camera', size=(10, 1), font='Helvetica 14')],
               [sg.Button('Verificar',size=(10, 1), font='Helvetica 14')],
                ]
 
@@ -103,26 +102,27 @@ def main():
     window = sg.Window('Projeto e Engenharia de Software',
                        layout, location=(800, 400))
     
-    cap = cv2.VideoCapture(0) # Identificando a Camera
     recording = False
-    picture = False
     verificando = False
 
     while True: # Loop principal de leitura dos valores.
         event, values = window.read(timeout=20)
         if event == 'Sair' or event == sg.WIN_CLOSED:
+            reg_saida = pd.DataFrame(registros_saida, columns =['Nome', 'Entrada', 'Saida','Duracao'])
+            reg_saida.to_csv('registro_saida.csv', index=False)
             return
 
         elif event == 'Ligar Camera':
+            verificando = False
             recording = True
-            picture = False
 
         elif event == 'Tirar Foto':
-            picture = True
+            recording = False
+            verificando = True
 
         elif event == 'Parar':
             recording = False
-            picture = False
+            verificando = False
             # img = np.full((480, 640), 255)
             # # this is faster, shorter and needs less includes
             # imgbytes = cv2.imencode('.png', img)[1].tobytes()
@@ -133,7 +133,7 @@ def main():
             verificando = True
 
         elif recording: # Esta condição verifica se foi pressionado "Ligar a Camera" assim ela liga a leitura do OpenCV e projeta na tela
-            ret, frame = cap.read()
+            ret, frame = camera.read()
             imgbytes = cv2.imencode('.png', frame)[1].tobytes()
             window['image'].update(data=imgbytes)
             # if picture: # Aqui só irá começar caso tenha um nome no input e aperte para tirar a foto
@@ -174,11 +174,13 @@ def main():
                         
                             if comparacao == [True]:
                                 nome = nomes[aux_compare]
+                                print('1')
                                 try: 
                                     detect = frame
                                     cv2.rectangle(detect, (loc_x, loc_y), (loc_x+loc_w, loc_y+loc_h) ,(0,255,0),2)
                                     org = (loc_x, loc_y)
                                     cv2.putText(detect, nome, org , font, fontScale, color, thickness, cv2.LINE_AA, False)
+                                    print('2')
 
                                     if len(registros_entrada) == 0:
                                         """
@@ -187,6 +189,7 @@ def main():
                                         agora = datetime.now()
                                         registros_entrada.append([nome,agora])
                                         print(registros_entrada)
+                                        print('3')
                                     else:    
                                         for registro in registros_entrada:
                                             """
@@ -207,25 +210,33 @@ def main():
 
                                     print("ACESSO LIBERADO: "+str(nome))
                                     verificando = False
-                                    recording = True
+                                    recording = False
                                     sg.popup(f'Usuario Liberado, Bem Vindo(a) - {nome}')
-
+                                    print('4')
                                     # print(registros_entrada)
                                     # print(nomes_entrada)
-                                    sleep(2)
-                                    
+                                    #sleep(2)
+                                    comparacao = False
                                     break
                                 except:
                                     print('erro ao inserir credenciais...')
                                     comparacao = False
+                                    print('5')
                                     pass
                             else:
+                                print('6')
                                 aux_compare += 1
+                    print('7')
+                    
                     break
-
+                            
+                print('8')
                 aux_detect += 1 
                 if aux_detect == 5 :
-                    print("NÃO FOI POSSIVEL IDENTIFICAR")   
+                    print("NÃO FOI POSSIVEL IDENTIFICAR")
+                    verificando = False
+                    recording = True
+                      
 
 main()
 
