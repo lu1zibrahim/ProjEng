@@ -179,43 +179,47 @@ def read_csv_file(filename):
 
 def make_window1():
     sg.theme('Black')
-    layout = [[sg.Text('Home'), ],
-              [sg.Button('Janela_verificar', size=(10, 1), font='Helvetica 14')],
-              [sg.Button('Janela_cadastrar', size=(10, 1), font='Helvetica 14')],
-              [sg.Button('Janela_log', size=(10, 1), font='Helvetica 14')],
+    layout = [[sg.Column([
+            [sg.Image('UI/images/unifesp.png')],
+              [sg.Button("", image_filename='UI/Icons/acessar_camera2.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Janela_verificar"),
+              sg.Button("", image_filename='UI/Icons/cadastrar_usuario.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Janela_cadastrar"),
+              sg.Button("", image_filename='UI/Icons/acessar_logs_2.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Janela_log")],
+              ], justification='center')]
               ]
 
-    return sg.Window('Home', layout, finalize=True)
+    return sg.Window('Home', layout,size=(1024,800),resizable=True,  finalize=True)
 
 
 def make_window2():
     sg.theme('Black')
-    layout = [[sg.Text('Camera', size=(40, 1), justification='center', font='Helvetica 20')], # Texto para a Camera
+    layout = [[sg.Column([
+        [sg.Text('Camera', size=(40, 1), justification='center', font='Helvetica 20')], # Texto para a Camera
               [sg.Image(filename='', key='image')], # Local para a camera
-              [sg.Button('Ligar Camera', size=(10, 1), font='Helvetica 14')],
-              [sg.Button('Verificar',size=(10, 1), font='Helvetica 14')],
-              [sg.Button('Home', size=(10, 1), font='Helvetica 14')],
+              [sg.Button("", image_filename='UI/Icons/ligar_camera_final.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Ligar Camera"),
+               sg.Button("", image_filename='UI/Icons/verificar_final.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Verificar")],
+              [sg.Button("", image_filename='UI/Icons/PaginaInicial.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Home")],
+                 ], justification='center')]
                ]
     # window = sg.Window('Projeto e Engenharia de Software',
     #                    layout, location=(800, 400))
     
     
-    return sg.Window('Janela Verificar', layout,  finalize=True)
+    return sg.Window('Janela Verificar', layout,size=(800,800),resizable=True, finalize=True)
 
 
 def make_window3():
     sg.theme('Black')
-    layout = [[sg.Text('Nome')], # Entrada de nome do funcionario - Campo de visualização
-              [sg.Input(key='-IN-')], # Entrada de nome do funcionario - Campo de Input
-              [sg.Text('Camera', size=(40, 1), justification='center', font='Helvetica 20')], # Texto para a Camera
+    layout = [[sg.Column([
+            [sg.Image('UI/Icons/nome_funcionario.png')], # Entrada de nome do funcionario - Campo de visualização
+              [sg.Input(key='-IN-', size=(40,2), justification='center', font='Helvetica 15')], # Entrada de nome do funcionario - Campo de Input
               [sg.Image(filename='', key='image')],# Local para a camera
-              [sg.Button("", image_filename='UI/Icons/LigarCamera.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Ligar Camera"), # Contém os campos de botões de acionamento
-               sg.Button("", image_filename='UI/Icons/TirarFoto.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Tirar Foto"), 
-               sg.Button("", image_filename='UI/Icons/Cadastrar.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Cadastrar")],
-              [sg.Button("", image_filename='UI/Icons/Sair.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Sair")],
-              [sg.Button('Home', size=(10, 1), font='Helvetica 14')],
+              [sg.Button("", image_filename='UI/Icons/ligar_camera_final.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Ligar Camera"), # Contém os campos de botões de acionamento
+               sg.Button("", image_filename='UI/Icons/tirar_foto_final.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Tirar Foto"), 
+               sg.Button("", image_filename='UI/Icons/cadastrar_final.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Cadastrar")],
+              [sg.Button("", image_filename='UI/Icons/PaginaInicial.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Home")],
+    ], justification='center')]
                ]
-    return sg.Window('Janela Cadastrar', layout, finalize=True)
+    return sg.Window('Janela Cadastrar', layout, size=(800,800), resizable=True, finalize=True)
     # Criação da janela
 
 
@@ -240,8 +244,8 @@ def make_window4():
                         expand_x=True, expand_y=True,
                         enable_click_events=True)],
                 [sg.Sizegrip()],
-                [sg.Button('Home', size=(10, 1), font='Helvetica 14')]]
-    return sg.Window('CSV Table Display', layout, right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_EXIT,  resizable=True, finalize=True)
+                [sg.Button("", image_filename='UI/Icons/PaginaInicial.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Home")]]
+    return sg.Window('CSV Table Display', layout,layout, right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_EXIT,  resizable=True, finalize=True)
 
 
 window1, window2, window3, window4 = make_window1(), None, None, None
@@ -265,18 +269,6 @@ while True:
     if window == window2:
         recording = True
         verificando = False
-        for diretorio, subpastas, arquivos in os.walk(pasta):
-            for arquivo in arquivos:
-                nome = os.path.splitext(arquivo)[0]
-                extensao = os.path.splitext(arquivo)[1]
-                arquivo = os.path.join(pasta,arquivo)
-                
-                if (extensao == ".txt"):
-                    aux_load = np.loadtxt(arquivo)
-                    faces.append(aux_load)
-                    nomes.append(nome)
-
-        qtd_pessoas = np.shape(nomes)[0]
 
         while True: # Loop principal de leitura dos valores.
             event, values = window.read(timeout=20)
@@ -465,6 +457,18 @@ while True:
                         encodeTrain = treinamento(img_name)
                         salvaEncode(encodeTrain, str(img_name.split(".")[0]))
                         os.chdir('..') # Saindo do diretorio para permitir o restande do programa funcionar
+                        for diretorio, subpastas, arquivos in os.walk(pasta):
+                            for arquivo in arquivos:
+                                nome = os.path.splitext(arquivo)[0]
+                                extensao = os.path.splitext(arquivo)[1]
+                                arquivo = os.path.join(pasta,arquivo)
+                                
+                                if (extensao == ".txt"):
+                                    aux_load = np.loadtxt(arquivo)
+                                    faces.append(aux_load)
+                                    nomes.append(nome)
+
+                        qtd_pessoas = np.shape(nomes)[0]
                     except IndexError: # Caso não o face_recognition não identificar um rosto ele vai retornar IndexError Out of Range, então nos preparamos para este erro
                         os.chdir('..')
                         sg.popup('Não foi possível cadastrar o rosto, favor tentar novamente')
@@ -481,7 +485,7 @@ while True:
         while True:
             event, values = window.read()
             # print(event, values)
-            if event in (sg.WIN_CLOSED, 'Exit'):
+            if event in (sg.WIN_CLOSED, 'Sair'):
                 break
             if values['-TABLE-']:           # Show how many rows are slected
                 window['-SELECTED-'].update(f'{len(values["-TABLE-"])} rows selected')
