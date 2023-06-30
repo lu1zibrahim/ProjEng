@@ -200,8 +200,7 @@ def make_window2():
               [sg.Button("", image_filename='UI/Icons/PaginaInicial.png', button_color=(sg.theme_background_color(),sg.theme_background_color()),font=('Bookman Old Style', 1),border_width=0,key="Home")],
                  ], justification='center')]
                ]
-    # window = sg.Window('Projeto e Engenharia de Software',
-    #                    layout, location=(800, 400))
+    
     
     
     return sg.Window('Janela Verificar', layout,size=(800,800),resizable=True, finalize=True)
@@ -225,11 +224,11 @@ def make_window3():
 
 def make_window4():
     sg.theme('Black')
-    CSV_FILE = sg.popup_get_file('CSV File to Display', file_types=(("CSV Files", "*.csv"),), initial_folder=os.path.dirname(__file__), history=True)
-    if CSV_FILE is None:
-        sg.popup_error('Canceling')
-        exit()
-    data, header_list = read_csv_file(CSV_FILE)
+    # CSV_FILE = sg.popup_get_file('CSV File to Display', file_types=(("CSV Files", "*.csv"),), initial_folder=os.path.dirname(__file__), history=True)
+    # if CSV_FILE is None:
+    #     sg.popup_error('Canceling')
+    #     exit()
+    data, header_list = read_csv_file('registro_saida.csv')
     layout = [  [sg.Text('Click a heading to sort on that column or enter a filter and click a heading to search for matches in that column')],
                 [sg.Text(f'{len(data)} Records in table', font='_ 18')],
                 [sg.Text(k='-RECORDS SHOWN-', font='_ 18')],
@@ -406,7 +405,7 @@ while True:
                         recording = True
 
     if window == window3:
-            cap = cv2.VideoCapture(0) # Identificando a Camera
+            camera = cv2.VideoCapture(0) # Identificando a Camera
             recording = True
             picture = False
             while True: # Loop principal de leitura dos valores.
@@ -434,7 +433,7 @@ while True:
                     window1.un_hide()
 
                 elif recording: # Esta condição verifica se foi pressionado "Ligar a Camera" assim ela liga a leitura do OpenCV e projeta na tela
-                    ret, frame = cap.read()
+                    ret, frame = camera.read()
                     imgbytes = cv2.imencode('.png', frame)[1].tobytes()
                     window['image'].update(data=imgbytes)
                     nome = values['-IN-']
@@ -530,4 +529,5 @@ while True:
                 window4.close()
                 window1.un_hide()
 
+camera.release()
 window.close()
