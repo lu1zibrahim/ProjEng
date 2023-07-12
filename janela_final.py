@@ -11,9 +11,7 @@ from datetime import datetime
 from datetime import timedelta
 
 sg.theme('Black')   
-faces = []
 detection = 'not_found'
-faces = []
 fontScale = 1
 color = (0, 255, 0)
 thickness = 2
